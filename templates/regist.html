@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}ユーザ登録{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center">
+
+    <div class="form_wrapper">
+
+        <h1 class="d-flex justify-content-center">ユーザ登録</h1>
+
+        <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- <input type="submit" value="登録"> -->
+
+        <div class="d-flex justify-content-center">
+            <button id="registBtn" class="btn btn-standard" type="submit">登録</button>
+        </div>
+        </form>
+
+        <hr>
+        
+        <div class="d-flex justify-content-center">
+            <a href=" {{ BASE_DIR }}/login">
+                <button class="btn btn-sub">ログイン画面</button>
+            </a>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <a href=" {{ BASE_DIR }}/admin">
+                <button id="toAdminBtn" class="toAdmin btn btn-sub">管理画面</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

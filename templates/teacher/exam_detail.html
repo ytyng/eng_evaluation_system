@@ -1,0 +1,25 @@
+{% extends 'base_teacher.html' %}
+{% block title %}Teacher{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<ul>
+    {% for object in object_list %}
+        <a href="{{ request.get_full_path }}/{{ object.id }}">
+        <li>{{ object.examGroupName }}</li>
+        </a>
+    {% endfor %}
+</ul>
+
+<a href="{{ request.get_full_path }}/eval">
+<button>採点</button><br>
+</a>
+<a href="{{ request.get_full_path }}/result">
+<button>評価結果</button><br>
+</a>
+
+<div class="d-flex justify-content-center">
+<button class="btn btn-back" onclick="getBackPage()">戻る</button>
+</div>
+
+{% endblock %}

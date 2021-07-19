@@ -1,0 +1,44 @@
+{% extends 'base_student.html' %}
+{% block title %}Confirmation{{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>以下のテストを開始しますか？</h1>
+
+
+<h2>
+    {% for object in exam_list %}
+        <li>{{ object }}</li>
+    {% endfor %}
+    {{ exam }}
+</h2>
+<br>
+
+<div class="confirmation_wrapper">
+    <h5>はじめに</h5>
+    <ul>
+    <li>Google Chromeのブラウザを利用してください</li>
+    <li>ポップアップが表示されたら、マイクを許可してください</li>
+    </ul>
+
+    <h5>録音について</h5>
+    <ul>
+    <li><button class="btn btn-secondary sampleBtn"><i class="fas fa-microphone-alt fa-lg"></i></button> で録音を開始します</li>
+    <li>発話が終了したら <button class="btn btn-secondary sampleBtn">STOP</button> を押してください</li>
+    <li>録音が成功すると、各設問下部にプレイヤーパネルが表示され、録音された音声を再生できます</li>
+    <li>録音音声がある状態で再度 record を押すと、後から録音した音声に上書きされます</li>
+    <li>recordが開始したら、その問題のstopを押すまで他の問題は録音できません</li>
+    <li>「テストを提出」を押した後に、もう一度「提出する」ボタンが表示されます</li>
+    <li>「提出する」ボタンを押したらやり直せません</li>
+    </ul>
+    <div class="d-flex justify-content-end">
+
+        <button class="btn btn-back" onclick="getBackPage()">戻る</button>
+
+        <a href="{{ request.get_full_path }}/exam">
+            <button class="btn btn-standard" type="submit">開始する</button>
+        </a>    
+
+    </div>
+</div>
+
+{% endblock %}

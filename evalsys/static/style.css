@@ -1,0 +1,266 @@
+h1{
+    font-size: 25px;
+    color: #666;
+    margin-bottom: 30px;
+}
+h3{
+    font-size: 22px;
+    color: #666;
+    margin-bottom: 20px;
+}
+h3{
+    font-size: 19px;
+    color: #666;
+    margin-bottom: 20px;
+}
+p{
+    color: #666;
+}
+li{
+    line-height: 30px;
+}
+.li-standard{
+    height: 38px;
+}
+ul{
+    padding-left: 1rem;
+}
+hr{
+    margin-top: 36px;
+}
+audio{
+    margin-top: 30px;
+}
+.none{
+    display: none!important;
+}
+.container{
+    padding: 0 0 50px 0;
+    max-width: 500px;
+}
+.container-fluid{
+    padding: 0;
+}
+.nav-wrapper{
+    max-width: 500px;
+}
+.nav-link{
+    padding: 0;
+}
+/* フォーム */
+label{
+    display: none;
+}
+input{
+   /* padding: 6px 15px;
+    */
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    min-width: 250px;
+}
+.form_wrapper{
+    padding: 50px 0;
+}
+.form_wrapper .btn{
+    margin-left: 0;
+}
+.form_wrapper ul{
+    max-width: 250px;
+}
+/* ボタン */
+button{
+    margin-top: 20px;
+    margin-left: 20px;
+    min-width: 90px;
+}
+.btn{
+    padding: 8px 20px;
+}
+.btn-standard{
+    color: white;
+    background: #00BDD6;
+    border-radius: 12px;
+}
+.btn-standard:hover{
+    color: #00BDD6;
+    background: white;
+    border: 1px solid #00BDD6;
+}
+.btn-eval{
+    color: white;
+    background: #0C98ED;
+    border-radius: 12px;
+}
+.btn-eval:hover{
+    color: #0C98ED;
+    background: white;
+    border: 1px solid #0C98ED;
+}
+.btn-result{
+    color: white;
+    background: #0E7B8A;
+    border-radius: 12px;
+}
+.btn-result:hover{
+    color: #0E7B8A;
+    background: white;
+    border: 1px solid #0E7B8A;
+}
+.btn-sub{
+    color: white;
+    background: #7C898B;
+    border-radius: 12px;
+}
+.btn-sub:hover{
+    color: #7C898B;
+    background: white;
+    border: 1px solid #7C898B;
+}
+.btn-back{
+    color: #666;
+    background: #eee;
+    border-radius: 12px;
+}
+.btn-back:hover{
+    color: #666;
+    background: white;
+    border: 1px solid #7C898B;
+}
+.btn-text{
+    color: #666;
+}
+#loginBtn{
+    width: 120px;
+}
+#toAdminBtn{
+    width: 136px;
+}
+#registBtn{
+   /* width: 136px;
+    */
+}
+#logoutBtn{
+    color: #666;
+}
+/* ナビゲーションバー */
+.navbar-toggler{
+    margin: 0;
+}
+.navbar{
+    background: #EFEFEF;
+}
+.navbar-brand{
+    margin-left: 20px;
+}
+.account_wrapper{
+   /* min-width: 300px;
+    */
+    margin-right: 30px;
+}
+#navbarNav{
+    margin-right: 30px;
+}
+/* student */
+.header-wrapper{
+    padding: 20px 0;
+}
+.student_image{
+    margin-top: 18px;
+}
+/* Confirmation */
+.confirmation_wrapper ul{
+    padding: 10px 0 10px 32px;
+    margin-bottom: 20px;
+}
+.sampleBtn{
+    margin: 0;
+    padding: 5px;
+}
+/* Exam */
+.exam_wrapper{
+    padding: 50px 0;
+}
+.exam_wrapper h1{
+    margin-bottom: 60px;
+}
+.exam_wrapper h3{
+    font-weight: bold;
+}
+#btn-play{
+    color: #666;
+    background: #fff;
+    border-radius: 50px;
+}
+.stop{
+    animation: flash 1s linear infinite;
+}
+.stop:focus{
+   /* background-color: #00BDD6;
+    border: 1px solid #00BDD6;
+    */
+}
+@keyframes flash {
+    0%,100% {
+        opacity: 1;
+   }
+    50% {
+        opacity: 0.5;
+   }
+}
+/* Done */
+.done_wrapper h3{
+    margin-top: 90px;
+}
+.done_img{
+    margin: 40px 0;
+    width: 300px;
+}
+/* Teacher */
+.status_tag{
+    padding: 0px 15px;
+    line-height: 23px;
+    font-size: 12px;
+    color: white;
+    border-radius: 14px;
+    margin-right: 20px;
+    position: absolute;
+    right: 10px;
+}
+.submited{
+    background-color: #00BDD6;
+}
+.no_submited{
+    background-color: #D6280B;
+}
+.evaluated{
+    background-color: #0E7B8A;
+}
+.no_evaluated{
+    background-color: #D61578;
+}
+.result_list li{
+    position: relative;
+    height: 38px;
+    list-style: none;
+}
+.exam_list li{
+    position: relative;
+    height: 38px;
+   /* list-style: none;
+    */
+}
+.tag_examed{
+    padding: 0px 10px;
+    line-height: 23px;
+    font-size: 12px;
+    color: white;
+    border-radius: 14px;
+    margin-left: 20px;
+    background-color: #00BDD6;
+    position: absolute;
+    right: 120px;
+}
+.student_name {
+    margin-top: 30px;
+}

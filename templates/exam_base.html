@@ -1,0 +1,366 @@
+<!doctype html>
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+
+  {% load static %}
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="採点システム">
+  <meta name="aied_garasya" content="evalsys">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="icon" href="{% static 'images/favicon.ico' %}">
+  <style type='text/css'>
+    ul { list-style: none; }
+    #recordingslist audio { display: block; margin-bottom: 10px; }
+    #log { display: none;}
+    .invisible { visibility: hidden; }
+  </style>
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+
+<body>
+  <div class="container">
+    <div class="exam_wrapper">
+
+      <audio id="sound">
+        <!-- <source src="" type="audio/ogg"> -->
+        <source src="{% static '/audio/test3/2-1.mp3' %}" type="audio/mp3">
+      </audio>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="submitModalLabel">※提出するとやり直せません</h6>
+      
+              </button>
+            </div>
+            <div class="modal-body">
+              この音声で提出しますか？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-back" data-dismiss="modal" onclick="$('#submitModal').modal('hide')">戻る</button>
+              <button type="button]" class="btn btn-standard" onclick="submitExam()">提出する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form method="POST" name="examSubmitForm" id="examSubmitForm" enctype="multipart/form-data"></form>
+      
+    {% block content %}{% endblock %}
+
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-standard" data-toggle="modal" data-target="#submitModal" onclick="$('#submitModal').modal('show')">
+        テストを提出
+      </button>
+    </div>
+
+    </form>
+
+    <div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <!-- <script src="js/scripts.js"></script> -->
+
+  <pre id="log"></pre>
+
+  <script>
+  let testUrl = "test1"
+
+  function __log(e, data) {
+    log.innerHTML += "\n" + e + " " + (data || '');
+  }
+
+  const sound = document.querySelector("#sound");
+  let count = 0
+　function playsound() {
+    if (count < 2){
+      sound.play();
+    }
+    count ++;
+  }
+
+  var audio_context;
+  var recorder;
+  var toggle = 0;
+
+  let examFormData = new FormData();
+  let q1 = null
+  let q2 = null
+  let q3 = null
+
+  var locationUrl = window.location.pathname;
+  // URLSearchParamsオブジェクトを取得
+
+  console.log(locationUrl)
+
+  function startUserMedia(stream) {
+    var input = audio_context.createMediaStreamSource(stream);
+    audio_context.resume();
+    __log('Media stream created.');
+    
+    recorder = new Recorder(input);
+    __log('Recorder initialised.');
+  }
+
+  function toggleBtn(btn, num){
+    if (toggle == 0){
+      startRecording(btn, num);
+      toggle = 1;
+      // console.log(btn);
+      btn.innerHTML = 'STOP'
+      $(btn).toggleClass("stop");
+    }else{
+      stopRecording(btn, num);
+      toggle = 0;
+      // console.log(btn);
+      btn.innerHTML = '<i class="fas fa-microphone-alt fa-lg"></i>'
+      $(btn).toggleClass("stop");
+    }
+  }
+
+  function startRecording(button, num) {
+    recorder && recorder.record();
+
+    __log('Recording...');
+
+    // console.log(`start_${num}`);
+  }
+
+  function stopRecording(button, num) {
+    recorder && recorder.stop();
+  
+    __log('Stopped recording.');
+
+    // console.log(`stop_${num}`);
+    
+    recorder && recorder.exportWAV(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var li = document.createElement('li');
+      var au = document.createElement('audio');
+      var hf = document.createElement('a');
+
+      var audioBlob = new Blob([blob], {
+        type: 'audio/wav'
+      });
+      
+      
+      // console.log(num);
+
+      au.controls = true;
+      au.src = url;
+      hf.href = url;
+      hf.download = testUrl + `/${num}` + '.wav';
+      hf.innerHTML = hf.download;
+      li.appendChild(au);
+      li.appendChild(au);
+
+      let audioPlayer = document.getElementById(`audio-${num}`);
+      let audioLink = document.getElementById(`audiolink-${num}`);
+
+      if (audioPlayer.childNodes.length !== 0){
+        console.log(audioPlayer.childNodes[0]);
+        // elemTest.removeChild(parent.children[0]);
+        audioPlayer.innerHTML = '';
+        audioLink.innerHTML = '';        
+      }
+  
+      // console.log(audioPlayer);
+      // console.log(audioLink);
+      audioPlayer.appendChild(li);
+      audioLink.appendChild(hf);
+
+      // console.log(hf);
+
+      var audioForm = document.getElementById("id_audioFile");
+      // console.log('============');
+      // console.log(audioForm);
+      // console.log(audioBlob);
+
+      var formData = new FormData();
+      formData.append('file', audioBlob, 'audio/wav');
+
+      var uploadFormData = new FormData();
+
+      //　FileReader
+      var reader = new FileReader();
+
+      uploadFormData.append(num, new Blob([blob], {type:"application/octet-stream"}));
+     
+   
+      switch (num){
+        case "1-1":
+          q1 = new Blob([blob], {type:"application/octet-stream"});
+          // console.log('q1');
+          break;
+        case "2-1":
+          q2 = new Blob([blob], {type:"application/octet-stream"});
+          // console.log('q2');
+          break;
+        case "3-1":
+          q3 = new Blob([blob], {type:"application/octet-stream"});
+          // console.log('q3');
+          break;
+      }
+
+    });
+
+    recorder.clear();
+
+    console.log(audio_context);
+
+  }
+  
+
+  function createDownloadLink() {
+    recorder && recorder.exportWAV(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var li = document.createElement('li');
+      var au = document.createElement('audio');
+      var hf = document.createElement('a');
+      
+      // console.log(num);
+
+      au.controls = true;
+      au.src = url;
+      hf.href = url;
+      hf.download = new Date().toISOString() + '.wav';
+      hf.innerHTML = hf.download;
+      li.appendChild(au);
+      li.appendChild(au);
+      var elemTest = document.getElementById("recordingslist");
+      if (elemTest.childNodes.length !== 0){
+        console.log(elemTest.childNodes[0]);
+        // elemTest.removeChild(parent.children[0]);
+        elemTest.innerHTML = '';
+        
+      }
+      console.log(elemTest.childNodes.length);
+      // li.appendChild(hf);
+      recordingslist.appendChild(li);
+    });
+  }
+
+  window.onload = function init() {
+    try {
+      // webkit shim
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+      }
+      if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = function(constraints) {
+          // First get ahold of the legacy getUserMedia, if present
+          let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+          if (!getUserMedia) {
+            return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+          }
+          return new Promise(function(resolve, reject) {
+            getUserMedia.call(navigator, constraints, resolve, reject);
+          });
+        }
+      }
+      window.URL = window.URL || window.webkitURL;
+      
+      audio_context = new AudioContext;
+      __log('Audio context set up.');
+      __log('navigator.mediaDevices ' + (navigator.mediaDevices.length != 0 ? 'available.' : 'not present!'));
+    } catch (e) {
+      alert('No web audio support in this browser!');
+    }
+    
+    navigator.mediaDevices.getUserMedia({audio: true})
+      .then(function(stream) {
+        startUserMedia(stream);
+      })
+      .catch(function(e) {
+        __log('No live audio input: ' + e);
+    });
+  };
+
+function submitExam(){
+  document.examSubmitForm.submit();
+  sendAudio();
+}
+
+function sendAudio(){
+  examFormData.append('1-1', q1);
+  examFormData.append('2-1', q2);
+  examFormData.append('3-1', q3);
+
+  for (let value of examFormData.entries()) { 
+        console.log(value); 
+      }
+
+      var url = `http://127.0.0.1:8000${locationUrl}/testup/`
+   
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+
+      $.ajaxSetup({
+          beforeSend: function (xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  console.log(csrftoken);
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $.ajax({
+        // headers: { "X-CSRFToken": csrftoken },
+        url: url,
+        type: "POST",
+        dataType: 'binary',
+        processData: false,
+        data : examFormData,
+        cache : false,
+        contentType : false,
+
+        success: function(json){
+          if(json.message){
+            alert(json.message);
+          }
+        }
+
+      });
+  }
+
+  </script>
+
+  <script src="{% static '/js/recorder.js' %}"></script>
+
+</body>
+</html>

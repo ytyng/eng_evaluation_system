@@ -1,0 +1,55 @@
+{% extends 'exam_base.html' %}
+{% block title %}Exam{{ block.super }}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+
+  <h1>Speaking Examination</h1>
+
+  <h3>Part1</h3>
+
+  <h4>次の文章を音読しなさい</h4>
+
+  <h5>I want to know the past and present of Hongkong.</h5>
+
+  
+  <button id="r-1-1" class="btn btn-secondary" onclick="toggleBtn(this,'1-1');"><i class="fas fa-microphone-alt fa-lg"></i></button>
+
+  <ul id="audio-1-1"></ul>
+  <div id="audiolink-1-1" class="invisible"></div>
+  <br>
+
+  <h3>Part2</h3>
+
+  <h4>聞こえた音声を反復しなさい</h4>
+  <h5>(2回だけ再生できます)</h5>
+
+  <button id="btn-play" class="btn" type="" onclick="playsound()"><i class="fas fa-2x fa-volume-up"></i></button>
+  <br>
+  <br>
+
+  <button id="r-1-1" class="btn btn-secondary" onclick="toggleBtn(this,'2-1');"><i class="fas fa-microphone-alt fa-lg"></i></button>
+
+  <ul id="audio-2-1"></ul>
+  <div id="audiolink-2-1" class="invisible"></div>
+  <br>
+  
+
+
+  <h3>Part3</h3>
+
+  <h4>空欄を補って、正しい文章を読み上げなさい</h4>
+
+  <h5>夕食に誘ってみましょう</h5>
+  <h6>________________ to go dinner tonight?</h6>
+  <br>
+
+  <button id="r-1-1" class="btn btn-secondary" onclick="toggleBtn(this,'3-1');"><i class="fas fa-microphone-alt fa-lg"></i></button>
+
+  <ul id="audio-3-1"></ul>
+  <div id="audiolink-3-1" class="invisible"></div>
+  <br>
+
+{% endblock %}

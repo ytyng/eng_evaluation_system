@@ -1,0 +1,16 @@
+{% extends 'base_teacher.html' %}
+{% block title %}Teacher{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<p>担当クラス</p>
+
+<ul>
+    {% for object in object_list %}
+        <a href="{{ request.get_full_path }}/{{ object.id }}">
+        <li class="li-standard">{{ object.className }}</li>
+        </a>
+    {% endfor %}
+</ul>
+
+{% endblock %}

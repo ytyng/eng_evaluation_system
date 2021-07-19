@@ -1,0 +1,37 @@
+{% extends 'base_teacher.html' %}
+{% block title %}Student{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center">
+<h4 style="margin:20px 0;">採点完了！</h4>
+</div>
+
+{% if msg %}
+
+<h5>※採点できなかった音声があります</h5><br>
+
+{% for key, value in msg.items %} 
+
+<ul style="list-style: none;">
+<li>生徒名：{{ key }}</li>
+<li>Error：{{ value.error }}</li>
+<li>Message：{{ value.msg }}</li>
+</ul>
+<br>
+
+{% endfor %}
+
+{% endif %}
+
+<div class="d-flex justify-content-center">
+<a href=" {{ BASE_DIR }}/teacher/{{ t_id }}">
+<button class="btn btn-standard">TOPへ戻る</button>
+</a>
+</div>
+
+<div class="d-flex justify-content-center">
+    <button class="btn btn-back" onclick="getBackPage()">一覧へ戻る</button>
+</div>
+
+{% endblock %}

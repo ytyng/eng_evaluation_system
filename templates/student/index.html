@@ -1,0 +1,23 @@
+{% extends 'base_student.html' %}
+{% block title %}Student{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h3>テスト一覧</h3>
+
+<ul class="exam_list">
+  {% for key, value in examlist.items %} 
+          {% if value == True %}
+          <li>{{ key }}
+            <span class="tag_examed">受験済</span>
+          
+          {% else %}
+          <li> <a href="{{ request.get_full_path }}/confirm/{{ key.id }}">
+            {{ key }}</a>
+
+          {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Student{{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>利用登録が済んでいないユーザです</h1>
+
+<a href=" {{ BASE_DIR }}/logout">
+<button>ログアウト</button>
+</a>
+
+{% endblock %}

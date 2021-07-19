@@ -1,0 +1,44 @@
+{% extends 'base_teacher.html' %}
+{% block title %}Teacher{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<p style="font-weight: bold;">{{ class }}</p>
+<p>{{ exGr }}</p>
+
+<ul class="result_list">
+  {% for key, value in is_submit.items %}
+        <li> 
+          {% if value == True %}
+            <span class="status_tag submited">提出済</span>
+          {% else %}
+          <span class="status_tag no_submited">未提出</span>
+          {% endif %}
+          {{ key }} </li>
+    {% endfor %}
+</ul>
+
+<form method="POST" id="evalate">
+
+  {% csrf_token %}
+
+  <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-eval">採点する</button><br>
+  </div>
+
+</form>
+<div class="d-flex justify-content-center">
+<a href="{{ request.get_full_path }}/result">
+  <button class="btn btn-result">評価結果</button><br>
+</a>
+</div>
+
+<div class="d-flex justify-content-center">
+<button class="btn btn-back" onclick="getBackPage()">　戻る　</button>
+</div>
+
+<script>
+
+</script>
+
+{% endblock %}

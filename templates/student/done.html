@@ -1,0 +1,30 @@
+{% extends 'base_student.html' %}
+{% block title %}Student{{ block.super }}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+
+<div class="done_wrapper">
+
+    <div class="d-flex justify-content-center">
+        <h3 class="">お疲れ様でした！</h3>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <img class="done_img" src="{% static 'images/done.png' %}" alt="" width="" height="">
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a href="/login">
+        <button class="btn btn-standard">試験一覧へ戻る</button>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
+<script>
+   
+</script>

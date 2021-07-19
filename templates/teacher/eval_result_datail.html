@@ -1,0 +1,47 @@
+{% extends 'base_teacher.html' %}
+{% block title %}Teacher{{ block.super }}{% endblock %}
+
+{% block content %}
+
+<p style="font-weight: bold;">{{ class }}</p>
+<p>{{ exGr }}</p>
+<h3 class="student_name">{{ student }}</h3>
+
+
+  {% for key, value in result.items %}
+  {% if value.request.coreType == 'en.sent.score' %}
+        <h4> {{ key }} <span style="font-size: 14px;margin-left: 15px;color:gray;">{{ value.request.coreType }}</span></h4>
+        <ul style="list-style: none;">
+        <li> 総合点：{{ value.result.overall }} </li>
+        <li> 発音点：{{ value.result.pron }} </li>
+        <li> 流暢さ：{{ value.result.overall }} </li>
+        <li> リズム：{{ value.result.rhythm.overall }} </li>
+        {% comment %}<a href="https://downloadhk.cloud.chivox.com/{{ value.uuid }}.mp3"><li>音声</li></a>{% endcomment %}
+        </ul>
+        <br>
+    
+  {% elif value.request.coreType == 'en.sent.recscore' %}
+        <h4> {{ key }}<span style="font-size: 14px;margin-left: 15px;color:gray;">{{ value.request.coreType }}</span></h4>
+        <ul style="list-style: none;">
+        <li> 総合点：{{ value.result.overall }} </li>
+        <li> 流暢さ：{{ value.result.overall }} </li>
+        <li> リズム：{{ value.result.rhythm.overall }} </li>
+        {% comment %}<a href="https://downloadhk.cloud.chivox.com/{{ value.uuid }}.mp3"><li>音声</li></a>{% endcomment %}
+        </ul>
+        <br>
+  
+  {% endif %}
+
+  {% endfor %}
+  
+  <div class="d-flex justify-content-center">
+  <button class="btn btn-back" onclick="getBackPage()">戻る</button>
+  </div>
+
+<!-- <button>評価結果</button><br> -->
+
+<script>
+
+</script>
+
+{% endblock %}
