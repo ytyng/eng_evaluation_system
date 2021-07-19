@@ -47,8 +47,8 @@ def getSig(appkey, timestamp, secretkey):
 def start(audioPath, refText, coreType):
     serverurl = "ws://cloud.chivox.com/ws?e=0&t=0&version=2"
     ws = create_connection(serverurl)
-    appkey = "155857575400000d"
-    secretkey = "061fa60a901eda4a68c01ee74bf41988"
+    appkey = "appKey"
+    secretkey = "seacretKey"
     timestamp = getTimestamp()
     sig = getSig(appkey, timestamp, secretkey)
     validate_msg = {
